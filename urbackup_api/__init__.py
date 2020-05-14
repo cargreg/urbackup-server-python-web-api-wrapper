@@ -171,7 +171,6 @@ class urbackup_server:
             
             return True
         
-    
     def get_client_status(self, clientname):
         
         if not self.login():
@@ -346,6 +345,17 @@ class urbackup_server:
         
         return status["status"]
     
+    def get_users(self):
+        if not self.login():
+            return None
+
+        users = self._get_json("settings",{"sa":"listusers"})
+        
+        if not "users" in users:
+            return None
+
+        return users["users"]
+
     def get_livelog(self, clientid = 0):
         if not self.login():
             return None
